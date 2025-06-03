@@ -11,16 +11,16 @@ document.addEventListener("DOMContentLoaded", function () {
         titleName.textContent = name || '';
     }
 
-    // Carica dati salvati, se presenti
-    const savedFormData = JSON.parse(localStorage.getItem('formData'));
-    if (savedFormData) {
-        emailInput.value = savedFormData.email || '';
-        firstnameInput.value = savedFormData.firstname || '';
-        lastnameInput.value = savedFormData.lastname || '';
-        updateTitleName(savedFormData.firstname);
+    // Carica dati da sessionStorage se presenti
+    const savedData = JSON.parse(sessionStorage.getItem('formData'));
+    if (savedData) {
+        emailInput.value = savedData.email || '';
+        firstnameInput.value = savedData.firstname || '';
+        lastnameInput.value = savedData.lastname || '';
+        updateTitleName(savedData.firstname);
     }
 
-    // Gestione salvataggio al click
+    // Gestione salvataggio
     saveButton.addEventListener('click', function () {
         const formData = {
             email: emailInput.value,
@@ -28,12 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
             lastname: lastnameInput.value
         };
 
-        localStorage.setItem('formData', JSON.stringify(formData));
-
-        // Aggiorna il titolo
+        sessionStorage.setItem('formData', JSON.stringify(formData));
         updateTitleName(formData.firstname);
-
-        // Mostra i dati anche sotto forma di testo
         printedForm.textContent = `Email: ${formData.email}, Nome: ${formData.firstname}, Cognome: ${formData.lastname}`;
     });
 });
